@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+  <form method="post">
+   
+    {% csrf_token %}
+    <div style="padding: 50px 80px;" class="container">
+      {% if messages %}
+        {% for i in messages %}
+          <div style="color: white;" id="i">{{ i }}</div>
+        {% endfor %}
+      {% endif %}
+
+      <div class="mb-3">
+        <label for="exampleInputusername1" class="form-label">username</label>
+        <input required name="username" type="username" class="form-control" id="exampleInputusername" aria-describedby="usernameHelp" />
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input required name="password" type="password" class="form-control" id="exampleInputPassword1" />
+      </div>
+      <a href="{% url 'user_profile' %}">Create Account</a>
+      <button style="margin-top: 20px;" type="submit" class="btn btn-secondary">Submit</button>
+    </div>
+  </form>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const message_show = document.getElementById('i')
+      setTimeout(() => {
+        if (message_show) {
+          message_show.style.display = 'none'
+        }
+      }, 4000)
+    })
+  </script>
+{% endblock %}

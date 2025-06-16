@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="container">
+      {% if messages %}
+        {% for i in messages %}
+          <div id="error" class="mb-3">{{ i }}</div>
+        {% endfor %}
+      {% endif %}
+
+      <h1 style="color: white;text-decoration: underline;">Create Your Account</h1>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">first name</label>
+        <input required name="first_name" type="text" class="form-control" id="exampleInputfirstname1" aria-describedby="firstnameHelp" />
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">last name</label>
+        <input required name="last_name" type="text" class="form-control" id="exampleInputlastname1" aria-describedby="lastnameHelp" />
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleInputusername1" class="form-label">user name</label>
+        <input required name="username" type="text" class="form-control" id="exampleInputusername1" aria-describedby="usernameHelp" />
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <input required name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input required name="password" type="password" class="form-control" id="exampleInputPassword1" />
+      </div>
+
+      <div class="mb-3 form-check">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        <input name="check_me_out" type="checkbox" class="form-check-input" id="exampleCheck1" />
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <div style="background-color: white;">
+        <nav>
+          Have An Account <a href="{% url 'login_user' %}">Login</a>
+        </nav>
+      </div>
+    </div>
+  </form>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const me = document.getElementById('error')
+      if (me) {
+        setTimeout(() => {
+          me.style.display = 'none'
+        }, 3000)
+      }
+    })
+  </script>
+{% endblock %}

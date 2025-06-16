@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your_To_Do_App</title>
+    <style>
+      body {
+        background-color: black;
+        color: black;
+      }
+      
+      .container-1 {
+        padding-left: 40px;
+        margin-top: 30px;
+        background-color: black;
+        display: flex;
+      
+        gap: 10px;
+      }
+      
+      .container-2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 30px;
+        border: 1px solid maroon;
+        border-radius: 4px;
+        background-color: black;
+        color: white;
+        margin-top: 200px;
+        box-shadow: 0 0 100px 0px;
+      }
+      
+      .container-3 {
+        border-radius: 5px;
+        box-shadow: 0 0 100px 0px;
+        padding: 80px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: large;
+        font-size: x-large;
+        text-decoration: underline;
+        border: 1.3px solid maroon;
+      }
+      
+      .btn {
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 4px 1px white;
+      }
+      
+      input {
+        border-radius: 5px;
+        padding: 10px;
+        border-color: maroon;
+        box-shadow: 0px 0px 4px 1px white;
+      }
+      
+      #btn-1 {
+        width: 100px;
+        border: 1px solid white;
+        height: 33px;
+        margin-top: 10px;
+        background-color: black;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+      
+      #btn-2 {
+        width: 100px;
+        border-radius: 10px;
+        background-color: white;
+        border: 1px solid black;
+        height: 33px;
+        margin-top: 10px;
+        cursor: pointer;
+      }
+      #btn-3 {
+        cursor: pointer;
+        width: 100px;
+        border-radius: 10px;
+        background-color: maroon;
+        color: white;
+        border: 0.9px;
+        height: 33px;
+        margin-top: 10px;
+      }
+      
+      a {
+        margin-top: 10px;
+      }
+      
+      img {
+        width: 33px;
+        height: 33px;
+        border-radius: 2px;
+      }
+      label {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
+        font-size: larger;
+      }
+      #label {
+        margin-right: 20px;
+        width: 100%;
+        color: white;
+      }
+      
+      #popup {
+        position: absolute;
+        top: 77px;
+        left: 250px;
+        width: fit-content;
+        height: 80px;
+        background: black;
+        color: white;
+        padding: 10px;
+        display: none; /* Hidden by default */
+        border-radius: 5px;
+        overflow: auto;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
+      
+      table {
+        width: 500px;
+      }
+     
+    </style>
+  </head>
+
+  <body>
+    {% if messages %}
+      {% for i in message %}
+        {{ i }}
+      {% endfor %}
+    {% endif %}
+
+    <div class="container-1">
+      <nav>
+        <button id="btn-1">Dark</button>
+        <button id="btn-2">white</button>
+        <button id="btn-3">Your Task</button>
+
+        <div id="popup" class="hidden">
+          <table border="9" class="table">
+            {% for user in data %}
+              {% for users in data2 %}
+                <thead>
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">task</th>
+                    <th scope="col">Date Created</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td scope="col">{{ forloop.counter }}</td>
+                    <td style="text-align: center;">{{ users.username }}</td>
+                    <td style="text-align: center;">{{ user.tasks }}</td>
+                    <td style="text-align: center;">{{ user.date }}</td>
+                  </tr>
+                </tbody>
+              {% endfor %}
+            {% endfor %}
+          </table>
+        </div>
+      </nav>
+      <div id="label">
+        <label for="">Home<a href="{% url 'logout_user' %}"><img src="https://static.vecteezy.com/system/resources/previews/000/568/450/original/home-icon-vector.jpg" alt="img" /></a></label>
+      </div>
+    </div>
+
+    <div id="cont2" class="container-2">
+      <div id="cont" class="container-3">
+        <div id="container-4" style="display: flex;justify-content: space-between;">
+          <h5 style="display: flex;gap: 10px;"><span>🖊</span>Enter Today's Task</h5>
+        </div>
+        <form method="POST">
+          {% csrf_token %}
+          <input required type="text" name="tasks" id="text1" />
+          <button class="btn btn-primary" type="submit">Save</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById('btn-3').addEventListener('click', () => {
+        var popup = document.getElementById('popup')
+        popup.style.display = popup.style.display === 'none' ? 'block' : 'none'
+      })
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        const first = document.getElementById('btn-1')
+        const second = document.getElementById('btn-2')
+        const container = document.getElementById('cont2')
+        const container3 = document.getElementById('cont')
+      
+        first.addEventListener('click', () => {
+          if (first) {
+            container.style.backgroundColor = 'black'
+            container.style.color = 'white'
+            first.style.backgroundColor = 'white'
+            first.style.color = 'black'
+            second.style.backgroundColor = 'black'
+            second.style.color = 'white'
+          }
+        })
+        second.addEventListener('click', () => {
+          if (second) {
+            container.style.backgroundColor = 'white'
+            container.style.color = 'black'
+            second.style.color = 'black'
+            second.style.border = '1px solid white'
+            second.style.backgroundColor = 'white'
+            first.style.backgroundColor = 'black'
+            first.style.color = 'white'
+            container3.style.border = 'none'
+          }
+        })
+      })
+    </script>
+  </body>
+</html>
